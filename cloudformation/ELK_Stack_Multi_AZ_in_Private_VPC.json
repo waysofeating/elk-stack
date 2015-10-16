@@ -33,6 +33,7 @@
             "Type": "String",
             "Default": "m4.large",
             "AllowedValues": [
+                "t2.small",
                 "t2.medium",
                 "m4.large",
                 "m4.xlarge",
