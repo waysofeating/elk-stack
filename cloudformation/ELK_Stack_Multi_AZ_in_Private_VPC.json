@@ -86,7 +86,7 @@
             "MinValue": 0
         },
         "SnapshotRepository": {
-            "Description": "S3 bucket name for elasticsearch snapshots repository",
+            "Description": "S3 bucket name for elasticsearch snapshots repository (will be created)",
             "Type": "String"
         },
         "IndexKeepDays": {
