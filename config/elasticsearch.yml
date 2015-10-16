@@ -233,7 +233,9 @@ bootstrap.mlockall: true
 #
 # http.enabled: false
 
-http.host: 127.0.0.1
+# Allow connections from ELB - allow binding from 0.0.0.0
+# We must restrict access using the security policy
+#http.host: 127.0.0.1
 
 
 ################################### Gateway ###################################
