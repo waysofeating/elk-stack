@@ -16,7 +16,7 @@ exports.setupOAuth = function(express, app, config) {
       done(null, obj)
     })
 
-    var callbackUrl = 'http://' + config.host + '/auth/github/callback'
+    var callbackUrl = 'https://' + config.host + '/auth/github/callback'
     
     passport.use(new GithubStrategy({
             clientID: config.oauth_client_id,

@@ -115,6 +115,7 @@
             "sa-east-1" :      { "ImageId": "ami-7727a46a" }
         },
         "InstanceMap": {
+            "t2.small":   { "ESHeapSize": "1g" },
             "t2.medium":  { "ESHeapSize": "2g" },
             "m4.large":   { "ESHeapSize": "4g" },
             "m4.xlarge":  { "ESHeapSize": "8g" },
@@ -339,7 +340,7 @@
                             "/usr/share/elasticsearch/bin/plugin --install mobz/elasticsearch-head",
                             "/usr/share/elasticsearch/bin/plugin --install karmi/elasticsearch-paramedic",
 
-                            "wget -O /etc/elasticsearch/elasticsearch.yml https://raw.githubusercontent.com/guardian/elk-stack/master/config/elasticsearch.yml",
+                            "wget -O /etc/elasticsearch/elasticsearch.yml https://raw.githubusercontent.com/waysofeating/elk-stack/master/config/elasticsearch.yml",
                             { "Fn::Join": [ "", [ "sed -i",
                                 " -e 's,@@REGION,", { "Ref": "AWS::Region" }, ",g'",
                                 " -e 's,@@STACK,", { "Ref": "Stack" }, ",g'",
@@ -368,7 +369,7 @@
                             ]},
                             "chown elasticsearch /data",
 
-                            "wget -O /etc/logstash/conf.d/logstash-indexer.conf https://raw.githubusercontent.com/guardian/elk-stack/master/config/logstash-indexer.conf",
+                            "wget -O /etc/logstash/conf.d/logstash-indexer.conf https://raw.githubusercontent.com/waysofeating/elk-stack/master/config/logstash-indexer.conf",
                             "sed -i -e 's,@@ELASTICSEARCH,localhost,g' /etc/logstash/conf.d/logstash-indexer.conf",
 
                             "# Install Kibana",
@@ -379,14 +380,14 @@
 
                             "# Install Logcabin",
 
-                            "wget -O /tmp/elk-stack.tar.gz https://github.com/guardian/elk-stack/archive/master.tar.gz",
+                            "wget -O /tmp/elk-stack.tar.gz https://github.com/waysofeating/elk-stack/archive/master.tar.gz",
                             "tar zxf /tmp/elk-stack.tar.gz -C /tmp",
                             "mv /tmp/elk-stack-master/src /opt/logcabin",
                             "adduser --disabled-password --gecos \"\" logcabin",
                             "cd /opt/logcabin && npm install && cd ..",
                             "chown -R logcabin /opt/logcabin",
 
-                            "wget -O /opt/logcabin/config.js https://raw.githubusercontent.com/guardian/elk-stack/master/config/config.js",
+                            "wget -O /opt/logcabin/config.js https://raw.githubusercontent.com/waysofeating/elk-stack/master/config/config.js",
                             { "Fn::Join": [ "", [ "sed -i",
                                 " -e s,@@LOGCABIN_HOST,",
                                     { "Fn::If" : [ "HasDNS",
@@ -400,8 +401,8 @@
                                 " /opt/logcabin/config.js" ] ] },
 
                             "# Start services",
-                            "wget -O /etc/systemd/system/logcabin.service https://raw.githubusercontent.com/guardian/elk-stack/master/config/systemd-logcabin.service",
-                            "wget -O /etc/systemd/system/kibana.service https://raw.githubusercontent.com/guardian/elk-stack/master/config/systemd-kibana.service",
+                            "wget -O /etc/systemd/system/logcabin.service https://raw.githubusercontent.com/waysofeating/elk-stack/master/config/systemd-logcabin.service",
+                            "wget -O /etc/systemd/system/kibana.service https://raw.githubusercontent.com/waysofeating/elk-stack/master/config/systemd-kibana.service",
 
                             "systemctl start logstash && systemctl enable logstash",
                             "systemctl start elasticsearch && systemctl enable elasticsearch",
@@ -425,7 +426,7 @@
                                     ]},
                                     "curl 'http://localhost:9200/_snapshot/s3?pretty'",
 
-                                    "wget -O /usr/local/bin/backup.sh https://raw.githubusercontent.com/guardian/elk-stack/master/scripts/backup.sh",
+                                    "wget -O /usr/local/bin/backup.sh https://raw.githubusercontent.com/waysofeating/elk-stack/master/scripts/backup.sh",
                                     "chmod +x /usr/local/bin/backup.sh",
                                     "echo '15 0 * * * root /usr/local/bin/backup.sh' >/etc/cron.d/backup"
                                 ]]},
@@ -567,7 +568,7 @@
             "Description": "Logging endpoint for Logstash TCP input"
         },
         "KibanaURL": {
-            "Value": { "Fn::Join": ["", ["http://",
+            "Value": { "Fn::Join": ["", ["https://",
                 { "Fn::If" : [ "HasDNS",
                     { "Fn::Join": [".", [ "kibana", {"Ref": "HostedZoneName"} ]] },
                     { "Fn::GetAtt": [ "ElkPublicLoadBalancer", "DNSName" ]}
@@ -575,7 +576,7 @@
             "Description": "URL for the Kibana 4 Dashboard"
         },
         "GoogleOAuthRedirectUrl": {
-            "Value": { "Fn::Join": ["", ["http://",
+            "Value": { "Fn::Join": ["", ["https://",
                 { "Fn::If" : [ "HasDNS",
                     { "Fn::Join": [".", [ "kibana", {"Ref": "HostedZoneName"} ]] },
                     { "Fn::GetAtt": [ "ElkPublicLoadBalancer", "DNSName" ]}
