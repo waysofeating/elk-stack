@@ -268,7 +268,7 @@
                 "VPCZoneIdentifier": { "Ref": "PrivateVpcSubnets" },
                 "LaunchConfigurationName": { "Ref": "ElkLaunchConfig" },
                 "MinSize": "1",
-                "MaxSize": "12",
+                "MaxSize": "4",
                 "DesiredCapacity": { "Ref": "ElkCapacity" },
                 "HealthCheckType": "EC2",
                 "HealthCheckGracePeriod": 600,
