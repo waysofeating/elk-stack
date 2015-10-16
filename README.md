@@ -53,6 +53,11 @@ Installation
 
 3. Once the ELK stack has launched revisit the Google developer console and update the URLs copying the output for `GoogleOAuthRedirectURL` to `AUTHORIZED REDIRECT URI` and the same URL but without to path to `AUTHORISED JAVASCRIPT ORIGINS`.
 
+4. Add your certificate to **-ElkPublic-** and enable https traffic to port 8080
+
+5. Add https rule to **-ElkPublicLoadBalancerSecurityGroup-**
+
+
 Plugins
 -------
 
