@@ -327,7 +327,7 @@
                             "# Update repositories",
 
                             "wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -",
-                            "echo \"deb http://packages.elastic.co/elasticsearch/1.6/debian stable main\" > /etc/apt/sources.list.d/elasticsearch.list",
+                            "echo \"deb http://packages.elastic.co/elasticsearch/1.7/debian stable main\" > /etc/apt/sources.list.d/elasticsearch-1.7.list",
                             "echo \"deb http://packages.elastic.co/logstash/1.5/debian stable main\" > /etc/apt/sources.list.d/logstash.list",
                             "add-apt-repository -y ppa:chris-lea/node.js",
                             "sleep 1",
