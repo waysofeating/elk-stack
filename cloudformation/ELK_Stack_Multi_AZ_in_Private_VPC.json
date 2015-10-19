@@ -90,6 +90,10 @@
             "Description": "S3 bucket name for elasticsearch snapshots repository (will be created)",
             "Type": "String"
         },
+        "SSLCertId": {
+            "Description": "ARN for SSL Certificate - attached to Public and Private ELBs",
+            "Type": "String"
+        },
         "IndexKeepDays": {
             "Description": "Keep elasticsearch indices for x number of days",
             "Type": "Number",
@@ -458,7 +462,8 @@
                         "IpProtocol": "tcp",
                         "FromPort": "443",
                         "ToPort": "443",
-                        "CidrIp": "0.0.0.0/0"
+                        "CidrIp": "0.0.0.0/0",
+                        "SSLCertificateId": { "Ref": "SSLCertId" }
                     }
                 ]
             }
@@ -480,7 +485,8 @@
                         "IpProtocol": "tcp",
                         "FromPort": "9200",
                         "ToPort": "9200",
-                        "CidrIp": "0.0.0.0/0"
+                        "CidrIp": "0.0.0.0/0",
+                        "SSLCertificateId": { "Ref": "SSLCertId" }
                     }
                 ]
             }
