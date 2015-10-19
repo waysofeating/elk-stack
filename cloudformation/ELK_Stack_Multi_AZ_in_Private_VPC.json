@@ -220,9 +220,10 @@
                 "CrossZone": true,
                 "Listeners": [
                     {
-                        "Protocol": "HTTP",
+                        "Protocol": "HTTPS",
                         "LoadBalancerPort": "443",
                         "InstancePort": "8080",
+                        "InstanceProtocol": "HTTP",
                         "SSLCertificateId": { "Ref": "SSLCertId" }
                     }
                 ],
@@ -247,9 +248,10 @@
                 "CrossZone": true,
                 "Listeners": [
                     {
-                        "Protocol": "HTTP",
+                        "Protocol": "HTTPS",
                         "LoadBalancerPort": "9200",
                         "InstancePort": "9200",
+                        "InstanceProtocol": "HTTP",
                         "SSLCertificateId": { "Ref": "SSLCertId" }
                     }
                 ],
