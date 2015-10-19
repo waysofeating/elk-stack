@@ -222,7 +222,8 @@
                     {
                         "Protocol": "HTTP",
                         "LoadBalancerPort": "443",
-                        "InstancePort": "8080"
+                        "InstancePort": "8080",
+                        "SSLCertificateId": { "Ref": "SSLCertId" }
                     }
                 ],
                 "HealthCheck": {
@@ -248,7 +249,8 @@
                     {
                         "Protocol": "HTTP",
                         "LoadBalancerPort": "9200",
-                        "InstancePort": "9200"
+                        "InstancePort": "9200",
+                        "SSLCertificateId": { "Ref": "SSLCertId" }
                     }
                 ],
                 "HealthCheck": {
@@ -462,8 +464,7 @@
                         "IpProtocol": "tcp",
                         "FromPort": "443",
                         "ToPort": "443",
-                        "CidrIp": "0.0.0.0/0",
-                        "SSLCertificateId": { "Ref": "SSLCertId" }
+                        "CidrIp": "0.0.0.0/0"
                     }
                 ]
             }
@@ -485,8 +486,7 @@
                         "IpProtocol": "tcp",
                         "FromPort": "9200",
                         "ToPort": "9200",
-                        "CidrIp": "0.0.0.0/0",
-                        "SSLCertificateId": { "Ref": "SSLCertId" }
+                        "CidrIp": "0.0.0.0/0"
                     }
                 ]
             }
