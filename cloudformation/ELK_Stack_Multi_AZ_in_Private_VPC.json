@@ -256,7 +256,7 @@
                     }
                 ],
                 "HealthCheck": {
-                    "Target": "HTTP:8080/__es/",
+                    "Target": "HTTP:9200/",
                     "Timeout": "10",
                     "Interval": "20",
                     "UnhealthyThreshold": "10",
