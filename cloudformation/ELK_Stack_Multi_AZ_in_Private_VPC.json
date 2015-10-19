@@ -217,7 +217,7 @@
                 "Listeners": [
                     {
                         "Protocol": "HTTP",
-                        "LoadBalancerPort": "80",
+                        "LoadBalancerPort": "443",
                         "InstancePort": "8080"
                     }
                 ],
@@ -242,13 +242,13 @@
                 "CrossZone": true,
                 "Listeners": [
                     {
-                        "Protocol": "TCP",
-                        "LoadBalancerPort": "6379",
-                        "InstancePort": "6379"
+                        "Protocol": "HTTP",
+                        "LoadBalancerPort": "9200",
+                        "InstancePort": "9200"
                     }
                 ],
                 "HealthCheck": {
-                    "Target": "TCP:6379",
+                    "Target": "HTTP:8080/__es/",
                     "Timeout": "10",
                     "Interval": "20",
                     "UnhealthyThreshold": "10",
@@ -456,16 +456,8 @@
                 "SecurityGroupIngress": [
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "80",
-                        "ToPort": "80",
-                        "CidrIp": "0.0.0.0/0"
-                    }
-                ],
-                "SecurityGroupEgress": [
-                    {
-                        "IpProtocol": "tcp",
-                        "FromPort": "8080",
-                        "ToPort": "8080",
+                        "FromPort": "443",
+                        "ToPort": "443",
                         "CidrIp": "0.0.0.0/0"
                     }
                 ]
@@ -483,13 +475,11 @@
                         "FromPort": "6379",
                         "ToPort": "6379",
                         "CidrIp": "0.0.0.0/0"
-                    }
-                ],
-                "SecurityGroupEgress": [
+                    },
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "6379",
-                        "ToPort": "6379",
+                        "FromPort": "9200",
+                        "ToPort": "9200",
                         "CidrIp": "0.0.0.0/0"
                     }
                 ]
@@ -506,6 +496,12 @@
                         "IpProtocol": "tcp",
                         "FromPort": "6379",
                         "ToPort": "6379",
+                        "SourceSecurityGroupId": { "Ref": "ElkInternalLoadBalancerSecurityGroup" }
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "9200",
+                        "ToPort": "9200",
                         "SourceSecurityGroupId": { "Ref": "ElkInternalLoadBalancerSecurityGroup" }
                     },
                     {
@@ -565,7 +561,7 @@
 
     "Outputs": {
         "LogstashEndpoint": {
-            "Value": { "Fn::Join": ["", [ { "Fn::GetAtt": [ "ElkInternalLoadBalancer", "DNSName" ]}, ":6379"]] },
+            "Value": { "Fn::Join": ["", [ { "Fn::GetAtt": [ "ElkInternalLoadBalancer", "DNSName" ]}, ":9200"]] },
             "Description": "Logging endpoint for Logstash TCP input"
         },
         "KibanaURL": {
